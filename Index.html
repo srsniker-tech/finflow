@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0c10" />
+  <title>FinFlow</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#appMain">Pular para o conteúdo</a>
+
+  <div id="app" class="app" aria-live="polite">
+    <header class="topbar">
+      <div class="topbar__left">
+        <button class="icon-btn" id="btnMenu" aria-label="Abrir menu">
+          <span class="icon">☰</span>
+        </button>
+        <div class="brand">
+          <div class="brand__title">FinFlow</div>
+          <div class="brand__subtitle" id="subtitle">Controle financeiro offline</div>
+        </div>
+      </div>
+
+      <div class="topbar__right">
+        <button class="icon-btn" id="btnSearch" aria-label="Buscar (atalho /)">
+          <span class="icon">⌕</span>
+        </button>
+        <button class="icon-btn" id="btnTheme" aria-label="Alternar tema">
+          <span class="icon" id="themeIcon">◐</span>
+        </button>
+      </div>
+    </header>
+
+    <main id="appMain" class="main" tabindex="-1">
+      <section class="screen is-active" data-screen="dashboard">
+        <div class="hero">
+          <div class="hero__card">
+            <div class="hero__label">Saldo total</div>
+            <div class="hero__value" id="dashTotal">R$ 0,00</div>
+            <div class="hero__meta" id="dashMeta">Mês atual • Entradas: R$ 0,00 • Saídas: R$ 0,00</div>
+          </div>
+          <div class="hero__actions">
+            <button class="btn primary" id="btnNewTx" aria-label="Nova transação (atalho N)">+ Nova transação</button>
+            <button class="btn" id="btnNewAccount" aria-label="Nova conta">+ Nova conta</button>
+          </div>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <header class="card__header">
+              <h2 class="card__title">Insights</h2>
+              <span class="pill" id="insightPill">Hoje</span>
+            </header>
+            <div class="card__content" id="insights">
+              <div class="empty">
+                <div class="empty__title">Sem dados ainda</div>
+                <div class="empty__desc">Adicione uma transação para ver insights automáticos.</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <header class="card__header">
+              <h2 class="card__title">Contas</h2>
+              <button class="link" id="btnManageAccounts" aria-label="Gerenciar contas">Gerenciar</button>
+            </header>
+            <div class="card__content" id="accountsList">
+              <div class="empty">
+                <div class="empty__title">Nenhuma conta</div>
+                <div class="empty__desc">Crie Carteira, Banco ou Cartão para começar.</div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="transactions">
+        <div class="toolbar">
+          <div class="search">
+            <input id="q" type="search" inputmode="search" placeholder="Buscar por descrição, tag, categoria..." aria-label="Buscar transações" />
+            <button class="icon-btn" id="btnClearSearch" aria-label="Limpar busca">✕</button>
+          </div>
+          <div class="filters">
+            <button class="chip" id="chipMonth" aria-label="Filtrar mês atual">Mês</button>
+            <button class="chip" id="chipIncome" aria-label="Filtrar entradas">Entradas</button>
+            <button class="chip" id="chipExpense" aria-label="Filtrar saídas">Saídas</button>
+            <button class="chip" id="chipTransfer" aria-label="Filtrar transferências">Transferências</button>
+          </div>
+        </div>
+
+        <div class="list" id="txList" aria-label="Lista de transações">
+          <div class="empty">
+            <div class="empty__title">Sem transações</div>
+            <div class="empty__desc">Toque em “Nova transação” para registrar entradas e saídas.</div>
+          </div>
+        </div>
+
+        <button class="fab" id="fabNewTx" aria-label="Adicionar transação">+</button>
+      </section>
+
+      <section class="screen" data-screen="budget">
+        <div class="card">
+          <header class="card__header">
+            <h2 class="card__title">Orçamento</h2>
+            <span class="pill" id="budgetMonthLabel">Mês atual</span>
+          </header>
+          <div class="card__content" id="budgetList">
+            <div class="empty">
+              <div class="empty__title">Defina limites por categoria</div>
+              <div class="empty__desc">Você verá o progresso e alertas ao passar de 80% e 100%.</div>
+            </div>
+          </div>
+          <div class="card__footer">
+            <button class="btn primary" id="btnSetBudget">Definir orçamento</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="goals">
+        <div class="grid">
+          <article class="card">
+            <header class="card__header">
+              <h2 class="card__title">Metas</h2>
+              <button class="link" id="btnNewGoal" aria-label="Criar meta">Criar</button>
+            </header>
+            <div class="card__content" id="goalsList">
+              <div class="empty">
+                <div class="empty__title">Nenhuma meta</div>
+                <div class="empty__desc">Crie uma Reserva de Emergência ou um objetivo.</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <header class="card__header">
+              <h2 class="card__title">Caixinhas</h2>
+              <button class="link" id="btnNewBox" aria-label="Criar caixinha">Criar</button>
+            </header>
+            <div class="card__content" id="boxesList">
+              <div class="empty">
+                <div class="empty__title">Nenhuma caixinha</div>
+                <div class="empty__desc">Separe valores dentro de uma conta (Reserva, Viagem...).</div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="reports">
+        <div class="grid">
+          <article class="card">
+            <header class="card__header">
+              <h2 class="card__title">Gastos por categoria</h2>
+              <span class="pill">Donut</span>
+            </header>
+            <div class="card__content">
+              <canvas id="chartDonut" width="320" height="220" aria-label="Gráfico de gastos por categoria"></canvas>
+            </div>
+          </article>
+
+          <article class="card">
+            <header class="card__header">
+              <h2 class="card__title">Saldo no tempo</h2>
+              <span class="pill">Linha</span>
+            </header>
+            <div class="card__content">
+              <canvas id="chartLine" width="320" height="220" aria-label="Gráfico de saldo ao longo do tempo"></canvas>
+            </div>
+          </article>
+
+          <article class="card">
+            <header class="card__header">
+              <h2 class="card__title">Comparação mensal</h2>
+              <span class="pill">Barras</span>
+            </header>
+            <div class="card__content">
+              <canvas id="chartBars" width="320" height="220" aria-label="Gráfico de comparação mensal"></canvas>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="settings">
+        <div class="card">
+          <header class="card__header">
+            <h2 class="card__title">Configurações</h2>
+            <span class="pill">Offline</span>
+          </header>
+
+          <div class="card__content">
+            <div class="setting">
+              <div>
+                <div class="setting__title">Tema</div>
+                <div class="setting__desc">Claro/Escuro com preferência salva</div>
+              </div>
+              <button class="btn" id="btnTheme2" aria-label="Alternar tema">Alternar</button>
+            </div>
+
+            <div class="setting">
+              <div>
+                <div class="setting__title">Reduzir animações</div>
+                <div class="setting__desc">Respeita acessibilidade e melhora conforto</div>
+              </div>
+              <label class="switch" aria-label="Reduzir animações">
+                <input type="checkbox" id="reduceMotion" />
+                <span class="switch__ui"></span>
+              </label>
+            </div>
+
+            <hr class="sep"/>
+
+            <div class="setting">
+              <div>
+                <div class="setting__title">Backup</div>
+                <div class="setting__desc">Exportar e importar JSON com validação</div>
+              </div>
+              <div class="row">
+                <button class="btn" id="btnExport">Exportar</button>
+                <label class="btn" for="importFile" role="button" tabindex="0">Importar</label>
+                <input id="importFile" type="file" accept="application/json" hidden />
+              </div>
+            </div>
+
+            <div class="setting">
+              <div>
+                <div class="setting__title">PIN local</div>
+                <div class="setting__desc">Proteção opcional sem servidor</div>
+              </div>
+              <button class="btn" id="btnPin">Configurar</button>
+            </div>
+
+            <div class="setting danger">
+              <div>
+                <div class="setting__title">Reset seguro</div>
+                <div class="setting__desc">Apaga tudo com confirmação dupla</div>
+              </div>
+              <button class="btn danger" id="btnReset">Resetar</button>
+            </div>
+
+            <hr class="sep"/>
+
+            <details class="help">
+              <summary>Ajuda rápida</summary>
+              <div class="help__content">
+                <ul>
+                  <li><b>N</b> cria nova transação.</li>
+                  <li><b>/</b> foca na busca de transações.</li>
+                  <li>Transações afetam saldos automaticamente.</li>
+                  <li>Funciona offline e salva tudo localmente.</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Navegação">
+      <button class="nav-item is-active" data-go="dashboard" aria-label="Dashboard">
+        <span class="nav-icon">⌂</span><span class="nav-label">Início</span>
+      </button>
+      <button class="nav-item" data-go="transactions" aria-label="Transações">
+        <span class="nav-icon">≡</span><span class="nav-label">Movs</span>
+      </button>
+      <button class="nav-item" data-go="budget" aria-label="Orçamento">
+        <span class="nav-icon">◴</span><span class="nav-label">Budget</span>
+      </button>
+      <button class="nav-item" data-go="goals" aria-label="Metas e Caixinhas">
+        <span class="nav-icon">◎</span><span class="nav-label">Metas</span>
+      </button>
+      <button class="nav-item" data-go="reports" aria-label="Relatórios">
+        <span class="nav-icon">▦</span><span class="nav-label">Relatórios</span>
+      </button>
+      <button class="nav-item" data-go="settings" aria-label="Configurações">
+        <span class="nav-icon">⚙</span><span class="nav-label">Ajustes</span>
+      </button>
+    </nav>
+
+    <div class="toast-stack" id="toasts" aria-live="polite" aria-relevant="additions"></div>
+
+    <div class="modal-backdrop" id="modalBackdrop" hidden></div>
+
+    <dialog class="modal" id="modal" aria-label="Janela">
+      <form method="dialog" class="modal__inner" id="modalForm">
+        <header class="modal__header">
+          <h3 class="modal__title" id="modalTitle">Título</h3>
+          <button class="icon-btn" value="cancel" aria-label="Fechar">✕</button>
+        </header>
+        <div class="modal__body" id="modalBody"></div>
+        <footer class="modal__footer" id="modalFooter"></footer>
+      </form>
+    </dialog>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
